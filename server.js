@@ -2,14 +2,13 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const config = require("./config/config");
+const urlRoutes = require("./routes/urlRoutes");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("API funcionando!");
-});
+app.use("/", urlRoutes);
 
-const PORT = config.server.port;
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, "127.0.0.1", () => console.log(`Servidor rodando na porta ${PORT}`));
