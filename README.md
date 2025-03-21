@@ -123,3 +123,5 @@ Exemplo de url para requisição:
 - Implementar contador de acessos a URL encurtada
 
 - Desencurtador de URL
+
+- Implementar a possíbilidade de um prefixo a url encurtada
