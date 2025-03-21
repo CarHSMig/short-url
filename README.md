@@ -120,8 +120,6 @@ Exemplo de url para requisição:
 
 - Implementar testes unitários utilizando Jest.js 
 
-- Adicionar validade as URLs encurtadas, hoje a aplicação verifica se já existe uma URL encurtada baseada na URL original enviada e retorna a mesma, a ideia é implementar uma espécia de validade que após determinado período o registro da URL encurtada é apagada para a geração de uma nova URL
-
 - Implementar contador de acessos a URL encurtada
 
 - Desencurtador de URL
