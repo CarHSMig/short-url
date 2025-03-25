@@ -1,8 +1,8 @@
 const request = require("supertest");
-const app = require("../server");
-const { Url } = require("../models");
+const app = require("../../../server");
+const { Url } = require("../../../models");
 
-jest.mock("../models");
+jest.mock("../../../models");
 
 describe("#shortenUrlController", () => {
   it("create short url", async () => {
