@@ -9,6 +9,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/", urlRoutes);
+if (process.env.NODE_ENV !== "test") {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, "127.0.0.1", () => console.log(`Servidor rodando na porta ${PORT}`));
+}
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, "127.0.0.1", () => console.log(`Servidor rodando na porta ${PORT}`));
+module.exports = app;

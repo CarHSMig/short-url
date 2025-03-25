@@ -10,7 +10,8 @@
     "migrate:undo:all": "npx sequelize-cli db:migrate:undo:all",
     "seed": "npx sequelize-cli db:seed:all",
     "db:create": "npx sequelize-cli db:create",
-    "db:drop": "npx sequelize-cli db:drop"
+    "db:drop": "npx sequelize-cli db:drop",
+    "test": "dotenv -e .env.test -- jest --runInBand"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +22,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "morgan": "^1.10.0",
-    "nanoid": "^5.1.4",
+    "nanoid": "3",
     "pg": "^8.13.3",
     "sequelize": "^6.37.6"
   },
