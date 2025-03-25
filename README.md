@@ -1,7 +1,6 @@
 
-# Url-Short
-
-O Url-Short consiste em uma API que possui como funcionalidades receber uma URL e retornar uma versão encurtada da mesma que pode ser utilizada para redirecionar até a URL original.
+# Short-Url
+O Short-Url consiste em uma API que possui como funcionalidades receber uma URL e retornar uma versão encurtada da mesma que pode ser utilizada para redirecionar até a URL original.
 
 O projeto surgiu inicialmente com o intuito de desenvolver minha habilidade na construção de APIs e aprender sobra uma stask tão poderosa como é o Nodejs. Dessa forma toda a construção da aplicação foi feita em Nodejs como já citado anteriormente, em conjunto com express e PostgreSql para armazarnar as URL e tudo isso feito em arquitetura RestFull.
 
@@ -28,8 +27,8 @@ O projeto surgiu inicialmente com o intuito de desenvolver minha habilidade na c
 Clone o repositório 
 
 ```bash
-  git clone https://github.com/CarHSMig/url-short.git
-  cd url-short
+  git clone https://github.com/CarHSMig/Short-Url.git
+  cd Short-Url
 ```
 
 Crie um arquivo .env na raiz do projeto para armazenar os seguintes dados: 
@@ -120,4 +119,10 @@ Exemplo de url para requisição:
 
 - Implementar testes unitários utilizando Jest.js 
 
-- Adicionar validade as URLs encurtadas, hoje a aplicação verifica se já existe uma URL encurtada baseada na URL original enviada e retorna a mesma, a ideia é implementar uma espécia de validade que após determinado período o registro da URL encurtada é apagada para a geração de uma nova URL
+- Implementar contador de acessos a URL encurtada
+
+- Desencurtador de URL
+
+- Implementar a possíbilidade de um prefixo a url encurtada
+
+- Implementar Acesso de login para acompanhamento das URLs encurtadas
