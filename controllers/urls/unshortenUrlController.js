@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
   const { short_url } = req.body;
 
   if (!short_url) {
-    return res.status(400).json({ message: "short_url is required" });
+    return res.status(400).json({ error: "short_url is required" });
   }
 
   try {
@@ -12,16 +12,15 @@ module.exports = async (req, res) => {
     const urlEntry = await Url.findOne({ where: { short_url: shortCode } });
 
     if (!urlEntry) {
-      return res.status(404).json({ error: "URL encurtada não encontrada" });
+      return res.status(404).json({ error: "Shortened URL not found" });
     }
 
     return res.json({
-      message: "URL original encontrada",
       original_url: urlEntry.original_url
     });
 
   } catch (error) {
-    console.error("Erro ao desencurtar a URL:", error);
-    res.status(500).json({ error: "Erro interno no servidor" });
+    console.error("Error redirecting:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
