@@ -117,11 +117,7 @@ Exemplo de url para requisição:
 
 ## Futuras Atualizações: 
 
-- Implementar testes unitários utilizando Jest.js 
-
 - Implementar contador de acessos a URL encurtada
-
-- Desencurtador de URL
 
 - Implementar a possíbilidade de um prefixo a url encurtada
 
