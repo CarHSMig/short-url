@@ -1,124 +1,96 @@
+<h1 align="center">Short-Url</h1>
 
-# Short-Url
-O Short-Url consiste em uma API que possui como funcionalidades receber uma URL e retornar uma versão encurtada da mesma que pode ser utilizada para redirecionar até a URL original.
+<p align="center">API REST para encurtar URLs e redirecionar para o endereço original.</p>
 
-O projeto surgiu inicialmente com o intuito de desenvolver minha habilidade na construção de APIs e aprender sobra uma stask tão poderosa como é o Nodejs. Dessa forma toda a construção da aplicação foi feita em Nodejs como já citado anteriormente, em conjunto com express e PostgreSql para armazarnar as URL e tudo isso feito em arquitetura RestFull.
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/Express-000000?logo=express&logoColor=white" alt="Express">
+  <img src="https://img.shields.io/badge/Sequelize-52B0E7?logo=sequelize&logoColor=white" alt="Sequelize">
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/tests-Jest%20%2B%20Supertest-C21325?logo=jest&logoColor=white" alt="Jest">
+</p>
 
+---
 
+## Sobre
 
-## Tenologias utilizadas
+Recebe uma URL longa, gera um código curto e único com **NanoID**, guarda o par no PostgreSQL e
+redireciona quem acessar o link curto. Também faz o caminho inverso: dado um link curto, devolve a URL original.
 
-- Node.js (Back-end)
-- Express.js (Framework web)
-- Sequelize (ORM para PostgreSQL)
-- PostgreSQL (Banco de dados)
-- NanoID (Gerador de identificadores únicos)
-- Nodemon (Hot reload durante o desenvolvimento)
+O projeto foi construído para praticar o desenho de APIs REST em Node.js, com migrations, separação
+por controllers e **testes de request** para cada endpoint.
 
+> Existe também uma reescrita em **NestJS + TypeScript + TypeORM**: [ts-short-url](https://github.com/CarHSMig/ts-short-url).
 
+## Endpoints
 
-## Funcionalidades
+| Método | Rota | Corpo | Resposta |
+|---|---|---|---|
+| `POST` | `/shorten` | `{ "original_url": "https://www.google.com" }` | `{ "short_url": "http://localhost:3000/aB1cD3" }` |
+| `POST` | `/unshorten` | `{ "short_url": "http://localhost:3000/aB1cD3" }` | `{ "original_url": "https://www.google.com" }` |
+| `GET` | `/:short_url` | – | Redirecionamento para a URL original |
 
-- Receber uma URL e devolver uma URL encurtada.
-- Redirecionar a partir da URL encurtada até a URL original.
+O domínio do link curto acompanha o host onde a API está rodando.
 
-## Instalação
+## Stack
 
-Clone o repositório 
+- **Node.js + Express**
+- **Sequelize** (ORM, migrations) + **PostgreSQL**
+- **NanoID** para os códigos curtos
+- **Jest + Supertest** para testes de request
+- morgan, cors, nodemon
+
+## Estrutura
+
+```
+config/        # configuração do Sequelize
+controllers/   # um controller por caso de uso (shorten, unshorten, redirect)
+migrations/
+models/
+routes/
+tests/         # testes de request por endpoint
+server.js
+```
+
+## Como rodar
+
+Pré-requisitos: Node 18+ e PostgreSQL.
 
 ```bash
-  git clone https://github.com/CarHSMig/Short-Url.git
-  cd Short-Url
+git clone https://github.com/CarHSMig/short-url.git
+cd short-url
+npm install
 ```
 
-Crie um arquivo .env na raiz do projeto para armazenar os seguintes dados: 
+Crie um `.env` na raiz:
+
+```env
+PORT=3000
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
+DB_NAME=url_short
+```
 
 ```bash
-    PORT=3000 // Porta onde a API será executada.
-
-    DB_HOST=127.0.0.1 // Endereço do servidor do banco de dados.
-    DB_PORT=5432 // Porta do banco de dados PostgreSQL.
-    DB_USER=seu_usuario // Nome do usuário do banco de dados PostgreSQL.
-    DB_PASSWORD=sua_senha // Senha do usuário do banco de dados.
-    DB_NAME=url_short // Nome do banco de dados onde as URLs encurtadas serão armazenadas.
+npm run db:create
+npm run migrate
+npm run dev        # ou npm start
 ```
 
-Instale os pacotes necéssarios
+### Testes
 
 ```bash
-  npm install
+npm test           # usa as variáveis de .env.test
 ```
 
-Caso esteja utilizando yarn rode
+## Próximos passos
 
-```bash
-  yarn install
-```
+- [ ] Contador de acessos por link
+- [ ] Prefixo/alias personalizado
+- [ ] Login para acompanhar os links criados
 
-Crie o DB e Rode as migrações:
-```bash
-  npm run db:create
-  npm run migrate 
-```
+## Autor
 
-Por fim rode a aplicação:
-
-```bash
-  npm run start
-```
-
-
-
-
-
-
-
-
-## Exemplo de uso
-
-### Criando uma URL encurtada
-
-Post /shorten
-
-Enive uma requisição passando no body a URL que deseja encurtar
-
-```json
-  {
-    "original_url": "https://www.google.com"
-  }
-```
-
-Exemplo de resposta: 
-
-```json
-  {
-    "short_url": "http://localhost:3000/aB1cD3"
-  }
-```
-
-Vale ressaltar que tanto a resposta quanto o domínio base da URL é definido conforma onde a aplicação está rodando, nesse caso é um exemplo para a aplicação rodando localmente ou seja utilizando localhost:3000, mas caso ela rode em um domínio próprio o retorno pode ser diferente, EX:
-```json
-{
-  "short_url": https://minhaapi.com/aB1cD3
-}
-```
-Assim como a url utilizada na requisição será "https://minhaapi.com/shorten"
-
-### Redirecionando para a URL original
-
-Get /:short_url
-
-Com a aplicação rodando basta passar a URL encurtada no navegador ou realizar uma requisição GET para a URL e você será direcionado para a URL original inserida
-
-Exemplo de url para requisição: 
- https://minhaapi.com/aB1cD3
-
-
-
-## Futuras Atualizações: 
-
-- Implementar contador de acessos a URL encurtada
-
-- Implementar a possíbilidade de um prefixo a url encurtada
-
-- Implementar Acesso de login para acompanhamento das URLs encurtadas
+**Carlos Henrique dos Santos Migon** · [LinkedIn](https://www.linkedin.com/in/carlos-henrique-dos-santos-migon-46387b336/) · [GitHub](https://github.com/CarHSMig)
